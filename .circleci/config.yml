@@ -15,10 +15,16 @@ jobs:
       - checkout
       - run: ./mvnw -Dmaven.test.skip=true package
 
+  deploy:
+    machine:
+    steps:
+      - run: docker-compose up
+
 workflows:
   version: 2
 
   build-then-test:
     jobs:
-      - build
       - test
+      - build
+      - deploy
