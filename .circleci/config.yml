@@ -11,15 +11,29 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:stretch
+    working_directory: ~/workspace
     steps:
       - checkout
-      - run: ./mvnw -Dmaven.test.skip=true package
+      - run: mvn -Dmaven.test.skip=true package
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: .
+              # Must be relative path from root
+          paths:
+            - docker-compose.yml
+            - Dockerfile
+            - infrastructure/target/infrastructure-1.0-SNAPSHOT.jar
 
   deploy:
     machine:
       image: ubuntu-1604:201903-01
     steps:
-      - run: docker-compose up
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: .
+      - run: docker-compose up -d
+      - run: curl http://localhost:2222/hello -v
 
 workflows:
   version: 2
@@ -28,10 +42,12 @@ workflows:
       - test
   build-deploy:
     jobs:
-      - test
+#      - test
       - build
       - deploy:
-        filters:  # using regex filters requires the entire branch to match
-          branches:
-            only:  # only branches matching the below regex filters will run
-              - master
+          requires:
+            - build
+#      - deploy:
+#        filters:  # using regex filters requires the entire branch to match
+#          branches:
+#            only: master

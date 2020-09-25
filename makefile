@@ -1,4 +1,4 @@
-gitammend:
+gitamend:
 	git add .
-	git commit -m "update circleci config"
+	git commit --amend
 	git push -f
