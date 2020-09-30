@@ -6,5 +6,5 @@ FROM adoptopenjdk/openjdk11:alpine-slim
 ARG JAR_FILE=infrastructure/target/infrastructure-1.0-SNAPSHOT.jar
 WORKDIR /opt/app
 COPY ${JAR_FILE} app.jar
-ENV SERVER_PORT=2222
+#ENV SERVER_PORT=2222
 ENTRYPOINT ["java","-jar","app.jar"]
