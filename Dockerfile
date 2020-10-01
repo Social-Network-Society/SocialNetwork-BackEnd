@@ -3,7 +3,7 @@
 #COPY . .
 #RUN mvn clean package
 FROM adoptopenjdk/openjdk11:alpine-slim
-ARG JAR_FILE=infrastructure/target/infrastructure-1.0-SNAPSHOT.jar
+ARG JAR_FILE=social-network-rest/target/social-network-rest-1.0-SNAPSHOT.jar
 WORKDIR /opt/app
 COPY ${JAR_FILE} app.jar
 #ENV SERVER_PORT=2222

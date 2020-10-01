@@ -1,4 +1,4 @@
-package com.codurance;
+package com.codurance.socialnetwork.rest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -11,7 +11,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class GreetingTest {
+public class SocialNetworkAcceptanceTest {
+  public static final String ROOT = "http://localhost:";
   @LocalServerPort
   private int port;
 
@@ -20,7 +21,14 @@ public class GreetingTest {
 
 
   @Test
-  void home_should_return_greeting() {
-    assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/hello", String.class), is("hello"));
+  void given_a_posted_message_when_read_command_is_sent_then_message_is_displayed() {
+//    this.restTemplate.postForObject(getUrl(""))
+    assertThat(
+            this.restTemplate.getForObject(getUrl("/hello"),
+                    String.class), is("hello"));
+  }
+
+  private String getUrl(String uri) {
+    return ROOT + port + uri;
   }
 }

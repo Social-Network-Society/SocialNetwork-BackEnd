@@ -24,8 +24,9 @@
     </dependencies>
   </dependencyManagement>
   <modules>
-    <module>domain</module>
-    <module>infrastructure</module>
+    <module>social-network-cli</module>
+    <module>social-network-rest</module>
+    <module>social-network-domain</module>
   </modules>
   <build>
     <plugins>

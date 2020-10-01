@@ -1,4 +1,8 @@
-version: 2.0
+version: 2.1
+
+orbs:
+  aws-ecr: circleci/aws-ecr@6.12.2
+#  aws-ecs: circleci/aws-ecs@0x.y.z
 
 jobs:
   test:
@@ -21,19 +25,19 @@ jobs:
           root: .
               # Must be relative path from root
           paths:
-            - docker-compose.yml
             - Dockerfile
-            - infrastructure/target/infrastructure-1.0-SNAPSHOT.jar
+            - social-network-rest/target/social-network-rest-1.0-SNAPSHOT.jar
 
-  deploy:
-    machine:
-      image: ubuntu-1604:201903-01
-    steps:
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: .
-      - run: docker-compose up -d
-      - run: curl http://localhost:2222/hello -v
+#  deploy:
+#    machine:
+#      image: ubuntu-1604:201903-01
+#    steps:
+#      - attach_workspace:
+#          # Must be absolute path or relative path from working_directory
+#          at: .
+#      - run: docker-compose up -d
+#      - run: curl http://localhost:2222/hello -v
+
 
 workflows:
   version: 2
@@ -42,11 +46,20 @@ workflows:
       - test
   build-deploy:
     jobs:
-#      - test
-      - build
-      - deploy:
+      - test
+      - build:
+          requires:
+            - test
+      - aws-ecr/build-and-push-image:
           requires:
             - build
+          attach-workspace: true
+          workspace-root: .
+          repo: "my-app"
+          tag: "1.0"
+#      - deploy:
+#          requires:
+#            - build
 #      - deploy:
 #        filters:  # using regex filters requires the entire branch to match
 #          branches:
