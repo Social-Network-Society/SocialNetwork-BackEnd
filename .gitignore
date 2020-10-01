@@ -4,3 +4,4 @@ target/
 /load_aws_credential.sh
 /process.yml
 /verify-circleci-config.sh
+/connect-docker-aws.sh
