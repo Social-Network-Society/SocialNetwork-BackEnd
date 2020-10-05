@@ -11,9 +11,9 @@ public class GreetingController {
   public @ResponseBody String greeting() {
     return "hello";
   }
-
-  @RequestMapping("/hello2")
-  public @ResponseBody String greeting2() {
-    return "hello new deployment 2";
-  }
+//
+//  @RequestMapping("/hello2")
+//  public @ResponseBody String greeting2() {
+//    return "hello new deployment 2";
+//  }
 }
