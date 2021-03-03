@@ -1,4 +1,4 @@
-package com.codurance.socialnetwork.rest;
+package com.codurance;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

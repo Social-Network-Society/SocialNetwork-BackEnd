@@ -1,10 +1,7 @@
-#FROM maven:3.6.3-jdk-11 as build
-#WORKDIR /buildApp
-#COPY . .
-#RUN mvn clean package
 FROM adoptopenjdk/openjdk11:alpine-slim
-ARG JAR_FILE=social-network-rest/target/social-network-rest-1.0-SNAPSHOT.jar
-WORKDIR /opt/app
-COPY ${JAR_FILE} app.jar
+RUN ls -la
+WORKDIR /my-workdir
+COPY social-network-rest/target/social-network-rest-1.0-SNAPSHOT.jar app.jar
+RUN ls -la
 #ENV SERVER_PORT=2222
 ENTRYPOINT ["java","-jar","app.jar"]
